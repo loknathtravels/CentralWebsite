@@ -1,0 +1,68 @@
+.image-container{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 91%;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 16px 16px 16px gray;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url(../Images/download.jpg);
+    animation-name: example;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+@keyframes example {
+    0%   {background-image: url(../Images/download.jpg);
+        animation-timing-function: steps(1)}
+    33%  {background-image: url(../Images/download2.jpg);
+        animation-timing-function: steps(1)}
+    66%  {background-image: url(../Images/Download3.jpeg);
+        animation-timing-function: steps(1)}
+}
+
+h5{
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+}
+
+.button{
+    background-color: rgb(0, 0, 0, 0.7);
+
+}
+.button:hover{
+    scale: 1.1;
+}
+
+#branch-id{
+    height: 30px;
+    font-size: 15px;
+    animation-name: branch;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    margin-top: 10px;
+}
+
+@keyframes branch {
+    0%      {font-size: 15px; font-weight: 1000; color: black; }
+    50%     {font-size: 20px; font-weight: 1000; color: blue }
+    100%    {font-size: 15px; font-weight: 1000; color: black;}
+}
+@media (max-width:420px){
+    .image-container{
+        height: 150px;
+    }
+    h5{
+        font-size: 15px;
+    }
+    .button{
+        padding: 5px;
+        font-size: 10px;
+        width: fit-content;
+    }
+}
