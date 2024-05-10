@@ -1,4 +1,4 @@
-.services-container {
+.container {
     padding: 20px;
   }
   
@@ -24,6 +24,9 @@
     margin-bottom: 20px;
   }
   
+  h1{
+    margin-bottom: 20px;
+  }
   .service h2 {
     font-size: 24px;
     margin-bottom: 10px;

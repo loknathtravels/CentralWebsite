@@ -32,9 +32,13 @@ function CardItem(props) {
         }
 
     }
+
+
+
+    console.log(props.item.ImageLocation);
     return (
         <div style={myStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='text-light'>
-            <img style={imgStyle} src= {props.item.ImageLocation}  alt='Location'/>
+            <img className = "desc img" style={imgStyle} src= {props.item.ImageLocation}  alt='Location'/>
             <h5>{props.item.Name}</h5>
             <b>Date - {props.item.Date}</b>, 
                 Duration - {props.item.Duration}

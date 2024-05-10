@@ -1,6 +1,5 @@
 import React from 'react';
 import '../CSS/services.css'; // Import the CSS file for styling
-import Navbar from './navbar';
 import FooterComp from './footer'
 import image1 from '../Images/download.jpg'
 const Services = () => {
@@ -19,8 +18,8 @@ const Services = () => {
 
   return (
     <>
-    <Navbar />
-    <div className="services-container">
+    <div className="container">
+      <hr></hr>
       <h1>Our Services</h1>
       <div className="service-list">
         {servicesData.map((service, index) => (
