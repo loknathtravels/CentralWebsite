@@ -29,6 +29,14 @@
     text-overflow: ellipsis;
 }
 
+.testimonial .button {
+    position: absolute;
+    align-items: center;
+    padding: 5%;
+    bottom: 5%;
+    height: 10px;
+}
+
 .testimonial .testimonial-text{
     position: absolute;
     align-items: center;

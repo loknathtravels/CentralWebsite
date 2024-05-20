@@ -1,0 +1,41 @@
+.testimonial-container-blog {
+    background: #ecf0f3;
+    border-radius: 20px;
+    box-shadow: 7px 7px 15px #babecc, -7px -7px 15px #ffffff;
+    max-width: 600px;
+    padding: 30px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.testimonial-header-blog h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.testimonial-content-blog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.author-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 10px #babecc, -4px -4px 10px #ffffff;
+}
+
+.testimonial-text-blog {
+    font-size: 16px;
+    color: #555;
+    margin: 20px 0;
+}
+
+.author-name-blog {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}

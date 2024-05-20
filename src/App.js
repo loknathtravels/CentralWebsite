@@ -12,7 +12,7 @@ import Gallery from './MyComponents/gallery';
 import { Route, Routes } from "react-router-dom";
 import React, {useRef, useState, useEffect} from 'react';
 import TestimonialList from './MyComponents/testimonialList';
-import img from './Images/download.jpg';
+import TestimonialBlog from './MyComponents/testimonial-blog';
 function App() {
 
 
@@ -37,22 +37,6 @@ function App() {
     ref.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "John Doe",
-      text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      imageUrl: img
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      imageUrl: img
-    },
-    // Add more testimonials as needed
-  ];
-
 
   return (
     <div className="App">
@@ -64,8 +48,9 @@ function App() {
         <Services/>,
         <Contact ref={scrollRef2} key={4}/>,<FooterComp key={5}/>]} />
       <Route path='/about' element={<About/>} />
-      <Route path='/services' element={<TestimonialList testimonials={testimonials}/>} />
+      <Route path='/testimonials' element={<TestimonialList/>} />
       <Route path='/gallery' element={<Gallery/>} />
+      <Route path='/readTestimonial' element={<TestimonialBlog/>} />
       </Routes>
       </div>
   );
