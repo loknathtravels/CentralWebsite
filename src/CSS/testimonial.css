@@ -1,6 +1,10 @@
 
-.testimonial{
+.testimonial-container {
     display: flex;
+    align-items: center;
+}
+.testimonial{
+    /* display: flex;
     grid-template-columns: 1fr 1fr;
     box-shadow: 5px 5px 10px 10px rgba(0, 0, 0, 0.1);
     border-radius:20%;
@@ -10,11 +14,16 @@
     height: 200px;
     padding: 10px;
     left: 5%;
+    position: relative; */
+    padding: 1rem;
+    border-radius: 4rem;
+    background-color: antiquewhite;
     position: relative;
+    left: -45px;
 }
 
-.testimonial img{
-    justify-content: flex-end;
+.testimonial-image{
+    /* justify-content: flex-end;
     position: absolute;
     border-radius: 50%;
     border: 5px solid;
@@ -25,8 +34,13 @@
     margin: 5px;
     height: 70%;
     width: 25%;
-    white-space: nowrap; /* Prevent text wrapping */
-    text-overflow: ellipsis;
+    white-space: nowrap; 
+    text-overflow: ellipsis; */
+    height: 10rem;
+    width: 10rem;
+    border-radius: 100%;
+    z-index: 100;
+    border: 5px solid white;
 }
 
 .testimonial .button {
@@ -38,21 +52,31 @@
 }
 
 .testimonial .testimonial-text{
-    position: absolute;
+    /* position: absolute;
     align-items: center;
     padding: 5%;
     top: 50%;
     transform: translateY(-50%);
     font-size: x-large;
-    font-family:cursive;
+    font-family:cursive; */
+    
+    /*position: absolute; */
+    margin: 1rem;
 }
 
 .testimonial .testimonial-author{
-    position: absolute;
+    /* position: absolute;
     left : 50%;
     bottom : 3%;
     transform: translateX(-50%);
     text-align: end;
+    color: brown;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+
+    left: 50%;
+    bottom: 3%;
+    text-align: center;
     color: brown;
     font-size: large;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

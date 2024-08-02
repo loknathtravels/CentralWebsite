@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from './navbar';
 import Testimonial from './testimonial';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
 
 const TestimonialsList = () => {
 
@@ -23,14 +22,14 @@ const TestimonialsList = () => {
     },
   ];
 
-  const openPage = (id) => {
-    for(let i in testimonials){
-      if(testimonials[i].id === id){
-        console.log(id)
-      }
-    }
-    // navigate('/detail', { state: { item } });
-  };
+  // const openPage = (id) => {
+  //   for(let i in testimonials){
+  //     if(testimonials[i].id === id){
+  //       console.log(id)
+  //     }
+  //   }
+  //   // navigate('/detail', { state: { item } });
+  // };
 
   const [isMobile, setIsMobile] = useState(2)
   const chunkArray = (array, chunkSize) => {
@@ -41,10 +40,6 @@ const TestimonialsList = () => {
     }
     return chunks;
   };
-  var my_style ={
-    margin:'2% 2% 0% 6%'
-  }
-
   const handleResize = () => {
     if (window.innerWidth < 770) {
         setIsMobile(1)
@@ -58,12 +53,12 @@ const TestimonialsList = () => {
   return (
     <>
     <Navbar/>
-    <div className="testimonials-list">
+    <div className="testimonials-list container">
     <h3>Testimonials</h3>
         {chunkArray(testimonials,isMobile).map((rowItem, rowIndex)=>(
      <div key={rowIndex} className="row">
       {rowItem.map((item, index)=>(
-            <div style = {my_style} key={index} className="col" onClick={openPage(index)}>
+            <div key={index} className="col mb-3">
         <Testimonial
           item={item}
         />

@@ -1,9 +1,13 @@
 import React from 'react';
 import '../CSS/testimonial-blog.css';
 import Navbar from './navbar';
+import { useLocation } from 'react-router-dom';
+
 
 const Testimonial = () => {
 
+  const location = useLocation();
+  console.log(location.state);
     const testimonials = [
         {
           id: 1,
@@ -29,12 +33,12 @@ const Testimonial = () => {
     </div>
     <div className="testimonial-content-blog">
         <img src={testimonials.imageURL} alt="Author" className="author-image" />
-        <p className="testimonial-text-blog">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vestibulum, massa at cursus viverra, justo erat ultrices leo, nec ultrices nisi urna vel arcu. Nulla facilisi. In hac habitasse platea dictumst. Integer ac leo sed orci facilisis dignissim. Cras et urna id massa dapibus ultrices. Etiam eu nulla in libero sollicitudin efficitur non ac ligula. Curabitur consectetur lorem at risus gravida, in pulvinar orci interdum."
-        </p>
+          <p className="testimonial-text-blog">
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vestibulum, massa at cursus viverra, justo erat ultrices leo, nec ultrices nisi urna vel arcu. Nulla facilisi. In hac habitasse platea dictumst. Integer ac leo sed orci facilisis dignissim. Cras et urna id massa dapibus ultrices. Etiam eu nulla in libero sollicitudin efficitur non ac ligula. Curabitur consectetur lorem at risus gravida, in pulvinar orci interdum."
+          </p>
         <p className="author-name-blog">John Doe</p>
     </div>
-</div>
+  </div>
 </div>
   );
 };
