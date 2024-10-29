@@ -17,6 +17,7 @@ function App() {
 
 
   const [items, setItems] = useState([]);
+  const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const fetchItems = async () => {
         const itemsCollection = await getDocs(collection(db, 'Items'));
@@ -26,6 +27,14 @@ function App() {
             ...doc.data(),
         }));
         setItems(itemsArray);
+        const reviewsCollection = await getDocs(collection(db, 'Reviews'));
+        const reviewsArray = reviewsCollection.docs.map(doc => ({
+            id: doc.id,
+            // Accessing each key in the document
+            ...doc.data(),
+        }));
+        setItems(itemsArray);
+        setReviews(reviewsArray)
     };
 
     fetchItems();
@@ -48,7 +57,7 @@ function App() {
         <Services/>,
         <Contact ref={scrollRef2} key={4}/>,<FooterComp key={5}/>]} />
       <Route path='/about' element={<About/>} />
-      <Route path='/testimonials' element={<TestimonialList/>} />
+      <Route path='/testimonials' element={<TestimonialList testimonials = {reviews}/>} />
       <Route path='/gallery' element={<Gallery/>} />
       <Route path='/readTestimonial' element={<TestimonialBlog/>} />
       </Routes>

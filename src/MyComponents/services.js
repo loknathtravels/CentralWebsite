@@ -1,18 +1,19 @@
 import React from 'react';
 import '../CSS/services.css'; // Import the CSS file for styling
 import FooterComp from './footer'
-import image1 from '../Images/download.jpg'
+import image1 from '../Images/Services1.jpg'
+import image2 from '../Images/Services2.jpg'
 const Services = () => {
   const servicesData = [
     {
-      title: 'Service 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      title: 'Tourism',
+      description: 'Discover extraordinary journeys tailored just for you. Unforgettable adventures, personalized to perfection.',
       image: image1,
     },
     {
-      title: 'Service 2',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      image: image1,
+      title: 'Event Management',
+      description: 'Savor the exceptional in every bite. Elevate your events with our culinary artistry, turning moments into memories.',
+      image: image2,
     },
   ];
 

@@ -27,7 +27,7 @@ const Card = React.forwardRef((props, ref) => {
     return (
 <div ref={ref} className="container">
     <hr></hr>
-    <h3>Upcoming Trips</h3>
+    <h3>Tour Programme</h3>
 {chunkArray(props.items,isMobile).map((rowItem, rowIndex)=>(
     <div key={rowIndex} className="row">
         {rowItem.map((item, index)=>(

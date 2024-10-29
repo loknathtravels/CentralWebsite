@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../CSS/about.css';
-import image1 from "../Images/download.jpg"
+import image1 from "../Images/Services1.jpg"
 import Navbar from './navbar';
 import FooterComp from './footer';
 
@@ -22,25 +22,20 @@ const About = () => {
             className="about-us-image"
           />
       <p>
-        We are a dedicated team of professionals passionate about creating
-        amazing products and providing exceptional services.
+      At Lokenath Caterer and Travels, we believe in creating unforgettable experiences for our guests. Our commitment goes beyond just providing a trip; we strive to offer a journey filled with small, meaningful services that enhance your overall travel experience.
       </p>
       <button className="toggle-button" onClick={handleToggle}>
         {showDetails ? 'Hide Details' : 'Show Details'}
       </button>
       {showDetails && (
         <div className="details-container">
-          <h3>Our Mission</h3>
+          <h3>Culinary Delights:</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
-            odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
-            Nulla quis sem at nibh elementum imperdiet.
+          Indulge your taste buds with our meticulously curated menu of super tasty local and international cuisines. Our chefs, passionate about creating culinary masterpieces, use the freshest ingredients to ensure each meal is a delight. From traditional dishes to gourmet treats, our dining experiences are designed to be a highlight of your journey.
           </p>
-          <h3>Our Vision</h3>
+          <h3>Complete Hospitality:</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
-            odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
-            Nulla quis sem at nibh elementum imperdiet.
+          hospitality is not just a service; it's a promise. Our dedicated team is committed to making you feel at home, even when you're miles away. From the moment you step into our care, we ensure your comfort and satisfaction. Whether it's assisting with travel arrangements, providing personalized recommendations, or attending to your specific needs, our hospitality extends beyond expectation.
           </p>
         </div>
       )}

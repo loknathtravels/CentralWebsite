@@ -6,17 +6,19 @@ import { useNavigate } from 'react-router-dom';
 const Testimonial = ({ item }) => {
 
     const navigate = useNavigate();
-
+    // console.log(item);
     const handleClick = (id) => {
-        navigate('/readTestimonial', { state: id });
+        console.log(item);
+        navigate('/readTestimonial', { state : item});
     };
   return (
    
       <div className='testimonial-container'>
-          <img src={item.imageUrl} alt={item.name} className="testimonial-image img-fluid" />
+          <img src={item.ImageUrl} alt={item.name} className="testimonial-image img-fluid" />
           <div className="testimonial" >
-            <p className="testimonial-text">"{item.text}"</p>
-            <p className="testimonial-author">~ {item.name}</p>
+            <p className="testimonial-text">"{item.Text}"</p>
+            <p className="testimonial-author">~ {item.Name}</p>
+            <p className="testimonial-author">~ {item.CorrespondingTour}</p>
           <button className="read-more" onClick={() => handleClick(item.id)}>Read More</button>
         </div>
       </div>
