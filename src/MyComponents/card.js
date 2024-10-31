@@ -15,7 +15,7 @@ const Card = React.forwardRef((props, ref) => {
       };
  
       const handleResize = () => {
-        if (window.innerWidth < 770) {
+        if (window.innerWidth < 870) {
             setIsMobile(1)
         } else {
             setIsMobile(3)

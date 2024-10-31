@@ -19,6 +19,7 @@
     border-radius: 4rem;
     background-color: antiquewhite;
     position: relative;
+    z-index: -1;
     left: -45px;
 }
 
@@ -39,7 +40,7 @@
     height: 10rem;
     width: 10rem;
     border-radius: 100%;
-    z-index: 100;
+    z-index: 0;
     border: 5px solid white;
 }
 

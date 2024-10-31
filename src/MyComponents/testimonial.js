@@ -16,7 +16,7 @@ const Testimonial = ({ item }) => {
       <div className='testimonial-container'>
           <img src={item.ImageUrl} alt={item.name} className="testimonial-image img-fluid" />
           <div className="testimonial" >
-            <p className="testimonial-text">"{item.Text}"</p>
+            <p className="testimonial-text">"{item.Text}..."</p>
             <p className="testimonial-author">~ {item.Name}</p>
             <p className="testimonial-author">~ {item.CorrespondingTour}</p>
           <button className="read-more" onClick={() => handleClick(item.id)}>Read More</button>
