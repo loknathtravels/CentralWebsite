@@ -13,6 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import React, {useRef, useState, useEffect} from 'react';
 import TestimonialList from './MyComponents/testimonialList';
 import TestimonialBlog from './MyComponents/testimonial-blog';
+import Itinerary from './MyComponents/Itinerary';
 function App() {
 
 
@@ -60,6 +61,7 @@ function App() {
       <Route path='/testimonials' element={<TestimonialList testimonials = {reviews}/>} />
       <Route path='/gallery' element={<Gallery/>} />
       <Route path='/readTestimonial' element={<TestimonialBlog/>} />
+      <Route path='/itinerary' element={<Itinerary/>} />
       </Routes>
       </div>
   );

@@ -1,0 +1,106 @@
+/* Itinerary.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2ede7; /* Beige background */
+    color: #333;
+  }
+  
+  .itinerary-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .itinerary-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #5e5046;
+    margin-bottom: 20px;
+  }
+  
+  .main-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .itinerary-wrapper {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .day-container {
+    position: relative;
+    padding: 20px;
+    background: #f5f0ea;
+    border-radius: 12px;
+    box-shadow: 8px 8px 16px #d6d1cb, -8px -8px 16px #ffffff;
+  }
+  
+  .day-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #5e5046;
+  }
+  
+  .day-details {
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .connector {
+    height: 50px;
+    width: 4px;
+    background: #e0dbd4;
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 4px 4px 8px #d6d1cb, -4px -4px 8px #ffffff;
+  }
+  
+  .side-sections {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .side-sections section {
+    background: #f5f0ea;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 8px 8px 16px #d6d1cb, -8px -8px 16px #ffffff;
+  }
+  
+  .side-sections h2 {
+    font-size: 1.5rem;
+    color: #5e5046;
+    margin-bottom: 10px;
+  }
+  
+  .side-sections p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .side-sections button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #e0dbd4;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 4px 4px 8px #d6d1cb, -4px -4px 8px #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .side-sections button:hover {
+    background-color: #d6d1cb;
+  }
+  
