@@ -17,7 +17,7 @@
     "sweetalert2": "^11.7.16",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://loknathtravels.github.io/CentralWebsite",
+  "homepage": "https://loknathtravels.github.io",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
