@@ -8,7 +8,6 @@ const Testimonial = ({ item }) => {
     const navigate = useNavigate();
     // console.log(item);
     const handleClick = (id) => {
-        console.log(item);
         navigate('/readTestimonial', { state : item});
     };
   return (

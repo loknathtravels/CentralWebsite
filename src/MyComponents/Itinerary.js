@@ -8,10 +8,14 @@ import "../CSS/itinerary.css";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import Navbar from './navbar';
 import FooterComp from './footer';
+import { useLocation } from "react-router-dom";
 
 const Itinerary = () => {
   const [itineraries, setItineraries] = useState([]); // All itineraries fetched from Firestore
   const [itinerary, setItinerary] = useState([]); // Processed itinerary data to display
+
+  const location = useLocation();
+  console.log(location.state);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +39,8 @@ const Itinerary = () => {
     const transformedItinerary = [];
 
     itineraries.forEach((iti) => {
-      if (iti.id === "Nepal") {
+      if (iti.id === location.state.Name) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         Object.keys(iti)
         .filter((key) => key !== "id")
         .sort() // Sort keys to maintain correct order
@@ -83,7 +88,6 @@ const Itinerary = () => {
               <div className="day-details">
                 <p>{day.details}</p>
               </div>
-              {index < itinerary.length - 1 && <div className="connector" />}
             </div>
           ))}
         </div>
