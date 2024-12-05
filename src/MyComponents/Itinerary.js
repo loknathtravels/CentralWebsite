@@ -77,7 +77,7 @@ const Itinerary = () => {
 
   return (
     <div className="itinerary-container">
-      <h1 className="itinerary-title">Itinerary</h1>
+      <h1 className="itinerary-title">Itinerary of {location.state.Name}</h1>
       <div className="main-content">
         <div className="itinerary-wrapper">
           {itinerary.map((day, index) => (
@@ -100,7 +100,7 @@ const Itinerary = () => {
 
           <section className="pricing-details">
             <h2>Pricing</h2>
-            <p>Total Cost: $1200</p>
+            <p>Tour Cost without train or Air Fare - {location.state.Duration}</p>
             <p>Includes accommodations, travel, and meals.</p>
           </section>
 
