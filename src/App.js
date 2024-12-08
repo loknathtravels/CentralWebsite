@@ -13,6 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import React, {useRef, useState, useEffect} from 'react';
 import TestimonialList from './MyComponents/testimonialList';
 import TestimonialBlog from './MyComponents/testimonial-blog';
+import BookingForm from './MyComponents/bookingForm';
 import Itinerary from './MyComponents/Itinerary';
 function App() {
 
@@ -62,6 +63,7 @@ function App() {
       <Route path='/gallery' element={<Gallery/>} />
       <Route path='/readTestimonial' element={<TestimonialBlog/>} />
       <Route path='/itinerary' element={<Itinerary/>} />
+      <Route path='/booking' element={<BookingForm/>} />
       </Routes>
       </div>
   );

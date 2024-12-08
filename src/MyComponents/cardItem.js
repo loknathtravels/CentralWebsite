@@ -39,7 +39,7 @@ function CardItem(props) {
             <b>Date - {props.item.Date}</b>,
             <p><b>Tour Cost without Train or Air Fare - {props.item.Duration}</b></p>
             <p>{props.item.ShortDesc}</p>
-            <button className='btn btn-sm btn-primary mb-2' onClick={() => handleItinerary(props.item)}>Read More</button>
+            <button className='btn btn-sm btn-primary mb-2' onClick={() => handleItinerary(props.item)}>View Itinerary</button>
         </div>
     );
 }
