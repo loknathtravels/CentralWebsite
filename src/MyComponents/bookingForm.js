@@ -8,39 +8,53 @@ const BookingForm = () => {
   const mystyle = {
     backgroundColor: "lightblue",
     borderRadius: "10px",
-    boxShadow: "7px 7px 15px #bebebe, -7px -7px 15px #ffffff",
-    border: "none",
-    padding: "10px",
+    border: "solid",
     fontSize: "14px",
     width: "50%",
-    marginBottom: "15px",
   };
 
-  const Validate = (values) => {
-  }
 
+  // Submit
   const formik = useFormik({
     initialValues: {
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      const data = {
+        values, 
+        travelers
+      }
+      alert("Are you sure you want to confirm this booking ?");
+      // Send data to server
+      fetch("http://127.0.0.1:8000/api/postBookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
     },
   });
 
-  React.useEffect(() => {
-    formik.setFieldValue(
-        "totalCost",
-        (Number(formik.values.numberOfAdults) * Number(formik.values.tourCostAdult) +
-          Number(formik.values.numberOfChildren) * Number(formik.values.tourCostChildren))
-          *(1-Number(formik.values.discount)/100)
-      );
-    formik.setFieldValue(
-        "due",
-        Number(formik.values.totalCost) - Number(formik.values.advancePaid)
-        )
-  }, [formik, formik.values.discount,formik.values.numberOfChildren, 
-    formik.values.numberOfAdults, formik.values.tourCostAdult,  
-    formik.values.tourCostChildren, formik.values.advancePaid]);
+  // Reading data using formik
+  const numberOfAdults = formik.values.numberOfAdults?formik.values.numberOfAdults:0;
+  const numberOfChildren = formik.values.numberOfChildren?formik.values.numberOfChildren:0;
+  const tourCostAdult = formik.values.tourCostAdult?formik.values.tourCostAdult:0;
+  const tourCostChildren = formik.values.tourCostChildren?formik.values.tourCostChildren:0;
+  const discount = formik.values.discount?formik.values.discount:0;
+  const totalAdvancePaid = formik.values.totalAdvancePaid?formik.values.totalAdvancePaid:0;
+  const otherBills = formik.values.otherBills?formik.values.otherBills:0;
+  const totalBill = formik.values.totalBill?formik.values.totalBill:0;
+  const totalTicketBill = formik.values.totalTicketBill?formik.values.totalTicketBill:0;
+  const setFieldValue = formik.setFieldValue;
+
+  // Travelers state and functions
   const [travelers, setTravelers] = useState([
     { name: "", dob: "", age: "", phone: "", email: "", remarks: "" },
   ]);
@@ -67,15 +81,65 @@ const BookingForm = () => {
     setTravelers(newTravelers);
   };
 
+  // bills and other calculations 
+  const totalCost = React.useMemo(() => {
+    return(
+    (Number(numberOfAdults) * Number(tourCostAdult) +
+      Number(numberOfChildren) * Number(tourCostChildren)) *
+    (1 - Number(discount) / 100));
+  }, [discount,numberOfChildren, numberOfAdults,tourCostAdult, tourCostChildren]);
+
+    React.useEffect(() => {
+      setFieldValue(
+          "totalCost",
+          totalCost
+          )
+    },[setFieldValue, totalCost])
+
+  React.useEffect(() => {
+    setFieldValue(
+      "advanceToBePaid",
+      Number(totalCost)*0.4 + (150*travelers.length) + Number(otherBills)
+      )
+  },[setFieldValue, totalCost,travelers, otherBills])
+
+  const finalBill = React.useMemo(() => {
+    setFieldValue(
+      "totalBill",
+      Number(totalCost) + Number(totalTicketBill) + Number(otherBills)
+      )
+  },[setFieldValue, totalCost, totalTicketBill, otherBills]);
+  React.useEffect(() => {
+    setFieldValue(
+      "totalBill",
+      finalBill
+      )
+  },[setFieldValue, finalBill]);
+
+  const due = React.useMemo(() => {
+    return(          
+      Number(totalBill) - Number(totalAdvancePaid)
+        )
+  }, [totalBill, totalAdvancePaid]);
+
+  React.useEffect(() => {
+    setFieldValue(
+        "totalBillDue",
+        due
+        )
+  },[setFieldValue,due])
+
+
+  // HTML
   return (
     <>
     <Navbar />
     <h1>Booking Form</h1>
-    <form onSubmit={formik.handleSubmit} style={{ display: "grid", gap: "20px" }}>
+    <form onSubmit={formik.handleSubmit} style={{ display: "grid", gap: "15px" }}>
       {/* Section 1 */}
       <div>
         <h3>Section 1</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+        <div className= "section1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           {[
             { id: "name", label: "Name", type: "text", required: true},
             { id: "numberOfAdults", label: "Number of Travelers (Adult)", type: "number", required: true },
@@ -89,8 +153,6 @@ const BookingForm = () => {
             { id: "tourCostChildren", label: "Tour Cost (Children)", type: "text", required:true},
             { id: "discount", label: "Discount in Percentage", type: "text", required:false},
             { id: "totalCost", label: "Total Cost", type: "text", required:true, disabled:true},
-            { id: "advancePaid", label: "Advance Amount Paid", type: "text", required:true},
-            { id: "due", label: "Due", type: "text", required:false, disabled:true},
             { id: "internalRemarks", label: "Remarks (Internal Purpose)", type: "text", required:false},
             { id: "travelerNotes", label: "Notes (for Travelers)", type: "text", required:false},
           ].map((field) => (
@@ -99,7 +161,7 @@ const BookingForm = () => {
               {field.type === "dropdown" ? (
                 <select id={field.id} name={field.id} style={mystyle}>
                   {field.options.map((option) => (
-                    <option key={option} value={option}>
+                    <option key={option} value={option} style={mystyle}>
                       {option}
                     </option>
                   ))}
@@ -113,7 +175,7 @@ const BookingForm = () => {
                   onChange={formik.handleChange}
                   value={formik.values[field.id]}
                   required={field.required}
-                  disabled={field.id === "totalCost" || field.id === "due"}
+                  disabled={field.id === "totalCost" || field.id === "due" || field.id === "advanceToBePaid"}
                 />
               )}
             </div>
@@ -126,6 +188,7 @@ const BookingForm = () => {
         <h3>Section 2</h3>
         {travelers.map((traveler, index) => (
           <div
+          className='section2'
             key={index}
             style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}
           >
@@ -229,14 +292,14 @@ const BookingForm = () => {
             textColor:"black"
           }}
         >
-          delete
+          Delete Traveler
         </button>
       </div>
 
       {/* Section 3 */}
       <div>
         <h3>Section 3</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+        <div className='section3' style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           <div>
             <label htmlFor="otherBills">Other Bill Amount</label>
             <input
@@ -263,14 +326,13 @@ const BookingForm = () => {
       {/* Section 4 */}
       <div>
         <h3>Section 4</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+        <div className='section4' style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           {[
-            { id: "totalTourBill", label: "Total Tour Bill" },
-            { id: "totalTicketBill", label: "Total Ticket Bill" },
-            { id: "otherBill", label: "Other Bill" },
-            { id: "totalBill", label: "Total Bill" },
-            { id: "totalAdvancePaid", label: "Total Advance Paid" },
-            { id: "totalBillDue", label: "Total Bill Due" },
+            { id: "totalTicketBill", label: "Total Ticket Bill", disabled: false},
+            { id: "totalBill", label: "Total Bill", disabled: true},
+            { id: "advanceToBePaid", label: "Advance to be Paid", type: "text", disabled:true},
+            { id: "totalAdvancePaid", label: "Total Advance Paid", disabled:false},
+            { id: "totalBillDue", label: "Total Bill Due", disabled:true},
           ].map((field) => (
             <div key={field.id}>
               <label htmlFor={field.id}>{field.label}</label>
@@ -280,6 +342,7 @@ const BookingForm = () => {
                 style={mystyle}
                 onChange={formik.handleChange}
                 value={formik.values[field.id]}
+                disabled={field.disabled}
               />
             </div>
           ))}
