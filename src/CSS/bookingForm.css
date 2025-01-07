@@ -28,6 +28,7 @@ form div {
     display: flex;
     flex-direction: column;
     gap: 15px;
+<<<<<<< HEAD
 }
 
 .Section-1{
@@ -36,4 +37,26 @@ form div {
 
 select{
     margin: auto;
+=======
+    background-color: whitesmoke;
+    margin: 10px;
+    color: black;
+    font-size: large;
+}
+
+.section1, .section2, .section3, .section4 {
+    border-radius: 20px;
+    box-shadow: 5px 3px 8px 8px rgb(167, 167, 168);
+    border: solid rgb(167, 167, 168);
+    padding-top: 30px;
+}
+
+select{
+    margin:auto;
+}
+
+button{
+    color: black;
+    border: solid rgb(255, 255, 255);
+>>>>>>> 7ac72e43aff7ecc0ea3a1696cbae76c267c60b5f
 }
