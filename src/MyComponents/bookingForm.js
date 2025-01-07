@@ -136,6 +136,7 @@ const BookingForm = () => {
     <>
     <Navbar />
     <h1>Booking Form</h1>
+    <StatusBar />
     <form onSubmit={formik.handleSubmit} style={{ display: "grid", gap: "15px" }}>
       {/* Section 1 */}
       <div className = "Section-1">
