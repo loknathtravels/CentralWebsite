@@ -29,3 +29,11 @@ form div {
     flex-direction: column;
     gap: 15px;
 }
+
+.Section-1{
+    box-shadow: grey;
+}
+
+select{
+    margin: auto;
+}

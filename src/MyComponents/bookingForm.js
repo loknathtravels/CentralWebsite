@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import { useFormik } from 'formik';
 import Navbar from './navbar';
 import FooterComp from './footer';
-import "../CSS/bookingForm.css"
+import StatusBar from './statusBar';
+import "../CSS/bookingForm.css";
 
 const BookingForm = () => {
   const mystyle = {
@@ -16,8 +17,8 @@ const BookingForm = () => {
     marginBottom: "15px",
   };
 
-  const Validate = (values) => {
-  }
+  // const Validate = (values) => {
+  // }
 
   const formik = useFormik({
     initialValues: {
@@ -71,9 +72,10 @@ const BookingForm = () => {
     <>
     <Navbar />
     <h1>Booking Form</h1>
+    <StatusBar />
     <form onSubmit={formik.handleSubmit} style={{ display: "grid", gap: "20px" }}>
       {/* Section 1 */}
-      <div>
+      <div className = "Section-1">
         <h3>Section 1</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           {[
