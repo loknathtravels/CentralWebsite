@@ -28,7 +28,6 @@ form div {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background-color: whitesmoke;
     margin: 10px;
     color: black;
     font-size: large;

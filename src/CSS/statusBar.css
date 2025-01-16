@@ -1,9 +1,10 @@
-.container-fluid{
+.status-bar{
     border-radius: 1rem;
     box-shadow: 4px 4px 8px #d6d1cb, -4px -4px 8px #ffffff;
     background-color: lightgray;
+    position: relative;
     width: 50%;
-    left: 50%;
+    margin: auto;
     margin-bottom: 2rem;
 }
 h4{

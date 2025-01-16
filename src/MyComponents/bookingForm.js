@@ -26,6 +26,7 @@ const BookingForm = () => {
       }
       alert("Are you sure you want to confirm this booking ?");
       // Send data to server
+      console.log("sending data")
       fetch("http://127.0.0.1:8000/api/postBookings", {
       method: "POST",
       headers: {
@@ -266,7 +267,6 @@ const BookingForm = () => {
                 }
               />
             </div>
-            <hr></hr>
           </div>
         ))}
         <button

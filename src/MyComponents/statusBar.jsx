@@ -3,7 +3,7 @@ import "../CSS/statusBar.css"
 function StatusBar(props) {
 
     return (
-    <div className='container-fluid'>
+    <div className='status-bar'>
         <div className="body">
             <h4>Booking Status - {props.bookingStatus}</h4>
             <h4>Booking ID - {props.bookingId}</h4>
