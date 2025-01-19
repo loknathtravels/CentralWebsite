@@ -9,16 +9,15 @@ const BookingCard = (props) => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '106px', // Fixed width for each item
+    width: '105px', // Fixed width for each item
     };
     const itemStylesIndex = {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        width: '11px', // Fixed width for each item
-        };
-    
-    console.log(props.item)
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    width: '11px', // Fixed width for each item
+    };
+    console.log(props.item);
     return (
         <Card style={{ width: "50%" ,marginLeft: 'auto', marginRight:"auto", marginTop:"1%", marginBottom:"1%"}}>
           <CardContent>
@@ -26,14 +25,14 @@ const BookingCard = (props) => {
           {/* Index */}
           <Grid2 item>
             <Box style={itemStylesIndex}>
-              <Typography variant="body1">{props.item.index}</Typography>
+              <Typography variant="body1">{props.index}</Typography>
             </Box>
           </Grid2>
 
           {/* Booking ID */}
           <Grid2 item>
             <Box style={itemStyles}>
-              <Typography variant="body1">{props.item.bookingId}</Typography>
+              <Typography variant="body1">{props.item.booking_id}</Typography>
             </Box>
           </Grid2>
 
@@ -47,14 +46,14 @@ const BookingCard = (props) => {
           {/* Date of Journey */}
           <Grid2 item>
             <Box style={itemStyles}>
-              <Typography variant="body1">{props.item.dateOfJourney}</Typography>
+              <Typography variant="body1">{props.item.date_of_journey}</Typography>
             </Box>
           </Grid2>
 
           {/* Booking Status */}
           <Grid2 item>
             <Box style={itemStyles}>
-              <Typography variant="body1">{props.item.bookingStatus}</Typography>
+              <Typography variant="body1">{props.item.booking_status}</Typography>
             </Box>
           </Grid2>
 

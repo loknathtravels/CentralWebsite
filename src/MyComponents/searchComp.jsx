@@ -16,8 +16,12 @@ const MenuProps = {
       },
     },
   };
-export default function SearchComp() {
+
+
+export default function SearchComp( {onDataFetch} ) {
     const [searchState, setSearchState] = useState({searchData:"", destinations:[], dateOfJourney:null, bookingStatus:[], name:""})
+    
+    
     const handleChangeDestination = (event) => {
         // console.log(searchState)
         const value = event.target.value
@@ -29,11 +33,12 @@ export default function SearchComp() {
           }
         );
       };
+
+
       const handleChangeStatus = (event) => {
         // console.log(searchState)
         const value = event.target.value
         setSearchState(
-          // On autofill we get a stringified value.
           (state) => {
             return {...state,bookingStatus: [...state.bookingStatus, ...( typeof value === 'string' ? value.split(',') : value)]}
           }
@@ -43,11 +48,11 @@ export default function SearchComp() {
     const handleSubmit = (data) => {
 
       fetch('http://127.0.0.1:8000/api/getBookingDetails', {
-        method: 'POST', // Change to POST
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Send the data in the body as JSON
+        body: JSON.stringify(data),
       })
         .then(response => {
           if (!response.ok) {
@@ -55,7 +60,11 @@ export default function SearchComp() {
           }
           return response.json();
         })
-        .then(data => console.log(data))
+        .then((data) =>{ 
+          if (onDataFetch) {
+          onDataFetch(data)
+        }
+        })
         .catch(error => console.error('Error:', error));
   };
 
@@ -68,7 +77,10 @@ export default function SearchComp() {
         'South India',
         'North India',
       ];
+
+
   return (
+
     <div style={{margin:"1%"}}>
     <Card style={myStylesDiv}>
         <FormControl sx={{ m: 1}} style={myStylesForm}>

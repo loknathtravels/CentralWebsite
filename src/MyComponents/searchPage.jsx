@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useState} from 'react'
 import SearchComp from '../MyComponents/searchComp'
 import BookingCard from './bookingCard';
 import Navbar from './navbar';
@@ -6,6 +6,8 @@ import { Divider } from '@mui/material';
 
 
 export default function SearchPage() {
+
+    const [mainData, setMainData] = useState([])
     const item = {
         index:1,
         bookingId:'123213',
@@ -14,12 +16,18 @@ export default function SearchPage() {
         bookingStatus:'Booked',
         name:'noname'
     }
+    const handleDataFetch = (fetchedData) => {
+      setMainData(fetchedData.data);
+    }
     return (
       <>
       <Navbar />
-      <SearchComp />
+      <SearchComp onDataFetch = {handleDataFetch}/>
       <hr style={{width:"70%", margin:"auto"}}></hr>
-      <BookingCard item={item} /> 
-      </>
+      {
+        mainData.map((item, index) => (
+        <BookingCard key={item.booking_id} item={item} index={index+1}/>
+      ))} 
+        </>
     );
   }

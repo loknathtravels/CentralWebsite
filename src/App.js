@@ -15,6 +15,7 @@ import TestimonialList from './MyComponents/testimonialList';
 import TestimonialBlog from './MyComponents/testimonial-blog';
 import BookingForm from './MyComponents/bookingForm';
 import Itinerary from './MyComponents/Itinerary';
+import EditBookingPage from './MyComponents/EditBookingPage';
 import SearchPage from './MyComponents/searchPage'
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
       <Route path='/itinerary' element={<Itinerary/>} />
       <Route path='/newBooking' element={<BookingForm/>} />
       <Route path='/searchBooking' element={<SearchPage/>} />
+      <Route path='/editBooking' element={<EditBookingPage/>} />
       </Routes>
       </div>
   );
