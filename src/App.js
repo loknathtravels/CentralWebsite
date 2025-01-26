@@ -17,6 +17,7 @@ import BookingForm from './MyComponents/bookingForm';
 import Itinerary from './MyComponents/Itinerary';
 import EditBookingPage from './MyComponents/EditBookingPage';
 import SearchPage from './MyComponents/searchPage'
+import UpcomingToursBackend from './MyComponents/UpcomingTourBackend';
 function App() {
 
 
@@ -68,6 +69,7 @@ function App() {
       <Route path='/newBooking' element={<BookingForm/>} />
       <Route path='/searchBooking' element={<SearchPage/>} />
       <Route path='/editBooking' element={<EditBookingPage/>} />
+      <Route path='/upcomingToursBackend' element={<UpcomingToursBackend/>} />
       </Routes>
       </div>
   );
