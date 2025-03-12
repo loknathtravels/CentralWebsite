@@ -116,7 +116,7 @@ const generatePDF = (formData) => {
       });
 
     // Save or open the PDF
-    //pdf.save("TourDetails.pdf");
+    pdf.save("TourDetails.pdf");
   };
 
   // Add branding image and then content

@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography, Card, CardContent, Grid2, IconButton, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useNavigate } from 'react-router-dom';
 
 
 const BookingCard = (props) => {
@@ -9,15 +10,27 @@ const BookingCard = (props) => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '105px', // Fixed width for each item
+    width: '90px', // Fixed width for each item
     };
+    const itemStylesBId = {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      width: '150px', // Fixed width for each item
+      };
     const itemStylesIndex = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '11px', // Fixed width for each item
+    width: '25px', // Fixed width for each item
     };
     console.log(props.item);
+    const navigate = useNavigate();
+        // console.log(item);
+        const handleClick = (id) => {
+            navigate('/editBooking', { state : props.item.bookingId});
+        };
+
     return (
         <Card style={{ width: "50%" ,marginLeft: 'auto', marginRight:"auto", marginTop:"1%", marginBottom:"1%"}}>
           <CardContent>
@@ -31,8 +44,8 @@ const BookingCard = (props) => {
 
           {/* Booking ID */}
           <Grid2 item>
-            <Box style={itemStyles}>
-              <Typography variant="body1">{props.item.booking_id}</Typography>
+            <Box style={itemStylesBId}> 
+              <Typography variant="body1">{props.item.bookingId}</Typography>
             </Box>
           </Grid2>
 
@@ -46,14 +59,14 @@ const BookingCard = (props) => {
           {/* Date of Journey */}
           <Grid2 item>
             <Box style={itemStyles}>
-              <Typography variant="body1">{props.item.date_of_journey}</Typography>
+              <Typography variant="body1">{props.item.dateOfJourney}</Typography>
             </Box>
           </Grid2>
 
           {/* Booking Status */}
           <Grid2 item>
             <Box style={itemStyles}>
-              <Typography variant="body1">{props.item.booking_status}</Typography>
+              <Typography variant="body1">{props.item.bookingStatus}</Typography>
             </Box>
           </Grid2>
 
@@ -66,14 +79,14 @@ const BookingCard = (props) => {
 
           {/* Edit Button */}
           <Grid2 item>
-            <IconButton color="primary">
-              <EditIcon />
+            <IconButton color="primary" style={itemStylesIndex}>
+              <EditIcon onClick ={ () => handleClick()} />
             </IconButton>
           </Grid2>
 
           {/* Cancel Button */}
           <Grid2 item>
-            <IconButton color="secondary">
+            <IconButton color="secondary" style={itemStylesIndex}>
               <CancelIcon />
             </IconButton>
           </Grid2>
