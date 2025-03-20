@@ -39,8 +39,8 @@ const TourDetailsPage = () => {
     totalCost: "0",
     internalRemarks: "",
     travelerNotes: "",
-    otherBills: "0",
     bookingId:"",
+    bookingStatus:"",
     totalTicketBill: "0",
     totalBill: "0",
     advanceToBePaid: "0",
@@ -49,6 +49,7 @@ const TourDetailsPage = () => {
   });
   const [travelers, setTravelers] = useState([{ travelerName: "", dob: "", age: "", travelerPhoneNumber: "", email: "", travelerRemarks: "" }]); // Separate state for tickets
   const [alert, setAlert] = useState({ open: false, message: "", severity: "info" });
+  const [otherBills, setOtherBills] = useState([{billId:"", amount:0, reason:"" }])
 
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const TourDetailsPage = () => {
             ...data,
           });
           setTravelers(data.allTickets || []); // Set tickets separately
+          setOtherBills(data.otherBills)
         } catch (error) {
           console.error("Error fetching booking details:", error);
         }
@@ -90,6 +92,16 @@ const TourDetailsPage = () => {
     setTravelers((prevTravelers) =>
       prevTravelers.map((traveler, i) =>
         i === index ? { ...traveler, [name]: value } : traveler
+      )
+    );
+  };
+
+  const handleOtherBillsChange = (event, index) => {
+    const { name, value } = event.target;
+  
+    setOtherBills((prevOtherBills) =>
+      prevOtherBills.map((otherBill, i) =>
+        i === index ? { ...otherBill, [name]: value } : otherBill
       )
     );
   };
@@ -120,8 +132,10 @@ const TourDetailsPage = () => {
     try {
       const requestdata = {
         "formData":formData,
-        "allTickets":travelers
+        "allTickets":travelers,
+        "otherBills":otherBills
       }
+      console.log(requestdata);
       const response = await fetch("http://127.0.0.1:8000/api/postBookings", {
         method: "POST",
         headers: {
@@ -137,6 +151,7 @@ const TourDetailsPage = () => {
       const data = await response.json();
       setFormData(data.formData || [])
       setTravelers(data.allTickets || [])
+      setOtherBills(data.otherBills || [])
       setAlert({ open: true, message: `Booking is successful with booking id - ${data.formData.bookingId}`, severity: "success" });
       setIsEditing(false);
     } catch (error) {
@@ -154,50 +169,75 @@ const TourDetailsPage = () => {
     );
   }, [formData.discount, formData.numberOfChildren, formData.numberOfAdults, formData.tourCostAdult, formData.tourCostChildren]);
 
-  const finalBill = Number(totalCost) + Number(formData.totalTicketBill) + Number(formData.otherBills);
+  const finalBill = Number(totalCost) + Number(formData.totalTicketBill) + Number(otherBills[0].amount);
   const due = Number(finalBill) - Number(formData.totalAdvancePaid);
 
   const updateFormData = (key, value) => setFormData(state => ({ ...state, [key]: value }));
 
   React.useEffect(() => {
     updateFormData("totalCost", totalCost);
-    updateFormData("advanceToBePaid", Number(totalCost) * 0.4 + 150 * travelers.length + Number(formData.otherBills));
+    updateFormData("advanceToBePaid", Number(totalCost) * 0.4 + 150 * travelers.length + Number(otherBills[0].amount));
     updateFormData("totalBill", finalBill);
     updateFormData("totalBillDue", due);
-  }, [totalCost, travelers.length, formData.otherBills, formData.totalTicketBill, formData.totalAdvancePaid, finalBill, due]);
+  }, [totalCost, travelers.length, otherBills, formData.totalTicketBill, formData.totalAdvancePaid, finalBill, due]);
 
 
   return (
     <>
       <Navbar />
       <Box sx={{ p: 2 }}>
+        <Card sx={{ml:"auto", mb:2}}>
+          <CardContent>
+            <Grid2 container spacing={5} >
+              {[
+                { label:"Booking ID", field:"bookingId", type:"text", disabled:true},
+                { label: "Booking Status", field: "bookingStatus", type:"text", disabled:true}
+                ].map((item) => (
+                  <Grid2 item xs={12} sm={6} key={item}>
+                 { item.type === "text" && (<TextField
+                    fullWidth
+                    label={item.label}
+                    sx={{ml:"225%"}}
+                    name={item.field}
+                    value={formData[item.field]}
+                    onChange={handleChange}
+                    disabled={!isEditing || item.disabled}
+                    InputLabelProps={{
+                      shrink: true, // Prevents overlap
+                    }}
+                  />)}
+                </Grid2>
+                ))}
+            </Grid2>
+          </CardContent>
+        </Card>
         {/* Tour Details Section */}
         <Card sx={{ mb: 2 }}>
           <CardContent>
             <Typography variant="h6">Tour Details</Typography>
             <Grid2 container spacing={2}>
               {[
-                { label: "Name", field: "name", type: "text", disabled:false },
-                { label: "Number Of Adults", field: "numberOfAdults", type:"text", disabled:false },
-                { label: "Number Of Children", field: "numberOfChildren", type:"text", disabled:false },
-                { label: "Address", field: "address", type:"text", disabled:false },
-                { label: "Primary Phone Number", field: "phoneNumber", type:"text", disabled:false},
-                { label: "Alternate Phone Number", field: "altPhoneNnumber", type:"text", disabled:false },
-                { label: "Destination", field: "destination", type:"select", disabled:false},
-                { label: "Date Of Journey", field: "dateOfJourney", type:"date", disabled:false},
-                { label: "Tour Cost (Adult)", field: "tourCostAdult", type:"text", disabled:false},
-                { label: "Tour Cost (Children)", field: "tourCostChildren", type:"text", disabled:false},
-                { label: "Discount", field: "discount", type:"text", disabled:false},
-                { label: "Total Cost", field: "totalCost", type:"text", disabled:true},
-                { label: "Internal Remarks", field: "internalRemarks", type:"text", disabled:false},
-                { label: "Traveler Notes", field: "travelerNotes", type:"text", disabled:false},
-                { label: "Booking Status", field: "bookingStatus", type:"text", disabled:true},
+                { label: "Name", field: "name", type: "text", disabled:false, required:true },
+                { label: "Number Of Adults", field: "numberOfAdults", type:"text", disabled:false, required:true },
+                { label: "Number Of Children", field: "numberOfChildren", type:"text", disabled:false, required:true },
+                { label: "Address", field: "address", type:"text", disabled:false, required:true },
+                { label: "Primary Phone Number", field: "phoneNumber", type:"text", disabled:false, required:true},
+                { label: "Alternate Phone Number", field: "altPhoneNumber", type:"text", disabled:false, required:false },
+                { label: "Destination", field: "destination", type:"select", disabled:false, required:true},
+                { label: "Date Of Journey", field: "dateOfJourney", type:"date", disabled:false, required:true},
+                { label: "Tour Cost (Adult)", field: "tourCostAdult", type:"text", disabled:false, required:true},
+                { label: "Tour Cost (Children)", field: "tourCostChildren", type:"text", disabled:false, required:true},
+                { label: "Discount", field: "discount", type:"text", disabled:false, required:true},
+                { label: "Total Cost", field: "totalCost", type:"text", disabled:true, required:true},
+                { label: "Internal Remarks", field: "internalRemarks", type:"text", disabled:false, required:false},
+                { label: "Traveler Notes", field: "travelerNotes", type:"text", disabled:false, required:false},
               ].map((item) => (
                 <Grid2 item xs={12} sm={6} key={item}>
                  { item.type === "text" && (<TextField
                     fullWidth
                     label={item.label}
                     name={item.field}
+                    required = {item.required}
                     value={formData[item.field]}
                     onChange={handleChange}
                     disabled={!isEditing || item.disabled}
@@ -211,6 +251,7 @@ const TourDetailsPage = () => {
                       type="date"
                       label={item.label}
                       name={item.field}
+                      required = {item.required}
                       value={formData[item.field]}
                       onChange={handleChange}
                       disabled={!isEditing}
@@ -225,6 +266,7 @@ const TourDetailsPage = () => {
                       fullWidth
                       label={item.label}
                       name={item.field}
+                      required = {item.required}
                       value={formData[item.field]}
                       onChange={handleChange}
                       disabled={!isEditing}
@@ -276,18 +318,19 @@ const TourDetailsPage = () => {
                 <Typography variant="subtitle1">Travelers {index + 1}</Typography>
                 <Grid2 container spacing={2}>
                   {[
-                    { label: "Traveler Name", field: "travelerName", type:"text", disabled:false},
-                    { label: "Date of Birth", field: "dob", type:"date", disabled:false},
-                    { label: "Age", field: "age", type:"text", disabled:false},
-                    { label: "Phone Number", field: "travelerPhoneNumber", type:"text", disabled:false},
-                    { label: "Email", field: "email", type:"text", disabled:false},
-                    { label: "Remarks", field: "travelerRemarks", type:"text", disabled:false},
+                    { label: "Traveler Name", field: "travelerName", type:"text", disabled:false, required:true },
+                    { label: "Date of Birth", field: "dob", type:"date", disabled:false, required:true },
+                    { label: "Age", field: "age", type:"text", disabled:true},
+                    { label: "Phone Number", field: "travelerPhoneNumber", type:"text", disabled:true, required:true },
+                    { label: "Email", field: "email", type:"text", disabled:false, required:false },
+                    { label: "Remarks", field: "travelerRemarks", type:"text", disabled:false, required:false },
                   ].map((item) => (
                     <Grid2 item xs={12} sm={6} key={`${index}-${item.field}`}>
                       { item.type === "text" && (<TextField
                     fullWidth
                     label={item.label}
                     name={item.field}
+                    required = {item.required}
                     value={traveler[item.field] || ""}
                     onChange={(e) => handleTravelerChange(e, index)}
                     disabled={!isEditing || item.disabled}
@@ -301,6 +344,7 @@ const TourDetailsPage = () => {
                       type="date"
                       label={item.label}
                       name={item.field}
+                      required = {item.required}
                       value={traveler[item.field] || ""}
                       onChange={(e) => handleTravelerChange(e, index)}
                       disabled={!isEditing || item.disabled}
@@ -315,6 +359,7 @@ const TourDetailsPage = () => {
                       fullWidth
                       label={item.label}
                       name={item.field}
+                      required = {item.required}
                       value={traveler[item.field] || ""}
                       onChange={(e) => handleTravelerChange(e, index)}
                       disabled={!isEditing || item.disabled}
@@ -347,18 +392,20 @@ const TourDetailsPage = () => {
         <Card sx={{ mb: 2 }}>
           <CardContent>
             <Typography variant="h6">Others Section</Typography>
+            {otherBills.map((otherBill, index) =>(
             <Grid2 container spacing={2}>
               {[
-                { label: "Other Bills", field: "otherBills" },
-                { label: "Other Remarks", field: "otherRemarks" },
+                { label: "Other Bills", field: "amount" },
+                { label: "Other Remarks", field: "reason" },
               ].map((item) => (
-                <Grid2 item xs={12} sm={6} key={item}>
+                <Grid2 item xs={12} sm={6} key={`${index}`}>
                   <TextField
                     fullWidth
                     label={item.label}
                     name={item.field}
-                    value={formData[item.field]}
-                    onChange={handleChange}
+                    required = {item.required}
+                    value={otherBill[item.field]}
+                    onChange={(e) => handleOtherBillsChange(e, index)}
                     disabled={!isEditing}
                     InputLabelProps={{
                       shrink: true, // Prevents overlap
@@ -366,7 +413,7 @@ const TourDetailsPage = () => {
                   />
                 </Grid2>
               ))}
-            </Grid2>
+            </Grid2>))}
           </CardContent>
         </Card>
 
@@ -377,16 +424,17 @@ const TourDetailsPage = () => {
             <Grid2 container spacing={2}>
               {[
                 { label: "Total Ticket Bill", field: "totalTicketBill", type:"text", disabled:false},
-                { label: "Total Bill", field: "totalBill", type:"text", disabled:true},
-                { label: "Advance Paid", field: "totalAdvancePaid", type:"text", disabled:false},
-                { label: "Advance to be paid", field: "advanceToBePaid", type:"text", disabled:true},
-                { label: "Total Bill Due", field: "totalBillDue", type:"text", disabled:true},
+                { label: "Total Bill", field: "totalBill", type:"text", disabled:true, required:true },
+                { label: "Advance Paid", field: "totalAdvancePaid", type:"text", disabled:false, required:true },
+                { label: "Advance to be paid", field: "advanceToBePaid", type:"text", disabled:true, required:true },
+                { label: "Total Bill Due", field: "totalBillDue", type:"text", disabled:true, required:true },
               ].map((item) => (
                 <Grid2 item xs={12} sm={6} key={item}>
                   { item.type === "text" && (<TextField
                     fullWidth
                     label={item.label}
                     name={item.field}
+                    required = {item.required}
                     value={formData[item.field]}
                     onChange={handleChange}
                     disabled={!isEditing || item.disabled}
@@ -400,6 +448,7 @@ const TourDetailsPage = () => {
                       type="date"
                       label={item.label}
                       name={item.field}
+                      required = {item.required}
                       value={formData[item.field]}
                       onChange={handleChange}
                       disabled={!isEditing}
@@ -414,6 +463,7 @@ const TourDetailsPage = () => {
                       fullWidth
                       label={item.label}
                       name={item.field}
+                      required = {item.required}
                       value={formData[item.field]}
                       onChange={handleChange}
                       disabled={!isEditing}
