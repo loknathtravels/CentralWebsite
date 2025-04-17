@@ -1,23 +1,36 @@
 import { jsPDF } from "jspdf";
 
-const generatePDF = (formData) => {
+const generatePDF = (formData, otherBills, travelers) => {
   const pdf = new jsPDF();
 
-  const labels = [{label:"Name", field:"name"},
-  {label:"Number Of Adults", field:"number_of_adults"},
-  {label:"Number Of Children", field:"number_of_children"},
-  {label:"Address", field:"address"},
-  {label:"Primary Phone Number", field:"phone_number"},
-  {label:"Alternate Phone Number", field:"alt_phone_number"},
-  {label:"Destination", field:"destination"},
-  {label:"Date Of Journey", field:"date_of_journey"},
-  {label:"Tour Cost Adult", field:"tour_cost_adult"},
-  {label:"tour Cost Children", field:"tour_cost_children"},
-  {label:"Discount", field:"discount"},
-  {label:"TotalCost", field:"total_cost"},
-  {label:"Internal Remarks", field:"internal_remarks"},
-  {label:"Traveler Notes", field:"traveler_notes"},
-  {label:"Booking Status", field:"booking_status"}]
+  const labels = [
+  {"bookingId":"Booking ID"},
+  {"status":"Booking Status"},
+  {"name":"Name"},
+  {"numberOfAdults":"Number Of Adults"},
+  {"numberOfChildren":"Number Of Children"},
+  {"address":"Address"},
+  {"phoneNumber":"Primary Phone Number"},
+  {"altphoneNumber":"Alternate Phone Number"},
+  {"destination":"Destination"},
+  {"dateOfJourney":"Date Of Journey"},
+  {"tourCostAdult":"Tour Cost Adult"},
+  {"tourCostChildren":"Tour Cost Children"},
+  {"discount":"Discount"},
+  {"totalCost":"Total Cost"},
+  {"internalRemarks":"Internal Remarks"},
+  {"travelerNotes":"Traveler Notes"},
+  {"amount":"Amount"},
+  {"reason":"Reason"}
+]
+
+const summary = [
+  {"totalTicketBill":"Total Ticket Bill"},
+  {"totalBill":"Total Bill"},
+  {"advanceToBePaid":"Advance to be Paid"},
+  {"totalAdvancePaid":"Total Advance Paid"},
+  {"totalBillDue":"Total Bill Due"}
+]
   
 //   for(data in formData){
 //     if (labels[data]){
@@ -33,8 +46,12 @@ const generatePDF = (formData) => {
   // Add Branding Text
   pdf.setFontSize(20);
   pdf.text("Lokenath Caterer and Travels", 10, 10); // Example branding text
+  pdf.setFontSize(8);
+  pdf.text("25/1 A.K.Debi Road, Naihati, 24 Parganas North, West Bengal, India", 10, 15);
+  pdf.setFontSize(8);
+  pdf.text("We do not have any branch", 10, 20);
   pdf.setFontSize(12);
-  pdf.text("Short tagline coming here", 10, 20);
+  pdf.text("From Bengal to all of India", 10, 30);
 
   // Add Branding Image
   // Replace 'brandingImageUrl' with the path/URL of your image
@@ -50,70 +67,61 @@ const generatePDF = (formData) => {
 
   // Add PDF Content
   const addContent = () => {
+    console.log(otherBills)
     let yPosition = 40; // Starting y-coordinate for content
 
     // Tour Details Section
     pdf.setFontSize(16);
     pdf.text("Tour Details", 10, yPosition);
     yPosition += 10;
-    Object.entries(formData)
-      .filter(([key]) =>
-        [
-          "name",
-          "numberOfAdults",
-          "numberOfChildren",
-          "address",
-          "phoneNumber",
-          "altPhoneNumber",
-          "destination",
-          "dateOfJourney",
-          "tourCostAdult",
-          "tourCostChildren",
-          "discount",
-          "totalCost",
-          "internalRemarks",
-          "travelerNotes",
-        ].includes(key)
-      )
-      .forEach(([key, value]) => {
-        pdf.setFontSize(12);
-        pdf.text(`${key}: ${value || "N/A"}`, 10, yPosition);
+    labels.forEach(item => {
+      const field = Object.keys(item)[0];
+      const label = item[field];
+      const value = formData[field] || "N/A";
+    
+      pdf.setFontSize(12);
+      if (value !== "N/A"){
+        pdf.text(`${label}: ${value}`, 10, yPosition);
         yPosition += 7;
-      });
+      }
+    });
 
     // Other Bills Section
     pdf.setFontSize(16);
     yPosition += 10;
     pdf.text("Other Bills Section", 10, yPosition);
     yPosition += 10;
-    Object.entries(formData)
-      .filter(([key]) => ["otherBills", "otherRemarks"].includes(key))
-      .forEach(([key, value]) => {
-        pdf.setFontSize(12);
-        pdf.text(`${key}: ${value || "N/A"}`, 10, yPosition);
-        yPosition += 7;
-      });
+    labels.forEach(item => {
+      const field = Object.keys(item)[0];
+      const label = item[field];
+      let value = "N/A"
+      otherBills.forEach(otherBill => {
+        value = otherBill[field] || "N/A";
+      })
+    
+      pdf.setFontSize(12);
+      if(value !== "N/A"){
+      pdf.text(`${label}: ${value}`, 10, yPosition);
+      yPosition += 7;
+    }
+    });
 
     // Summary Section
     pdf.setFontSize(16);
     yPosition += 10;
     pdf.text("Summary Section", 10, yPosition);
     yPosition += 10;
-    Object.entries(formData)
-      .filter(([key]) =>
-        [
-          "totalTicketBill",
-          "totalBill",
-          "advanceToBePaid",
-          "totalAdvancePaid",
-          "totalBillDue",
-        ].includes(key)
-      )
-      .forEach(([key, value]) => {
-        pdf.setFontSize(12);
-        pdf.text(`${key}: ${value || "N/A"}`, 10, yPosition);
+    summary.forEach(item => {
+      const field = Object.keys(item)[0];
+      const label = item[field];
+      const value = formData[field] || "N/A";
+    
+      pdf.setFontSize(12);
+      if (value !== "N/A"){
+        pdf.text(`${label}: ${value}`, 10, yPosition);
         yPosition += 7;
-      });
+      }
+    });
 
     // Save or open the PDF
     pdf.save("TourDetails.pdf");

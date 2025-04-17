@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
 import { MenuItem, FormControl, TextField, OutlinedInput, InputLabel, Button, Card} from '@mui/material';
 import { Margin } from '@mui/icons-material';
+import config from '../config';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
@@ -47,7 +48,7 @@ export default function SearchComp( {onDataFetch} ) {
 
     const handleSubmit = (data) => {
 
-      fetch('http://127.0.0.1:8000/api/getBookingDetails', {
+      fetch(`${config.BASE_URL}/getBookingDetails`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

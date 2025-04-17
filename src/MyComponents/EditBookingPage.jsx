@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import config from '../config';
 import Navbar from './navbar';
 import {
   Box,
@@ -57,7 +58,7 @@ const TourDetailsPage = () => {
     const fetchBookingDetails = async () => {
       if (bookingId !== null){
         try {
-          const response = await axios.post("http://127.0.0.1:8000/api/getBookingDetails", {
+          const response = await axios.post(`${config.BASE_URL}/getBookingDetails`, {
             bookingId,
           });
           const data = response.data.data[0];
@@ -136,7 +137,7 @@ const TourDetailsPage = () => {
         "otherBills":otherBills
       }
       console.log(requestdata);
-      const response = await fetch("http://127.0.0.1:8000/api/postBookings", {
+      const response = await fetch(`${config.BASE_URL}/postBookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -320,8 +321,8 @@ const TourDetailsPage = () => {
                   {[
                     { label: "Traveler Name", field: "travelerName", type:"text", disabled:false, required:true },
                     { label: "Date of Birth", field: "dob", type:"date", disabled:false, required:true },
-                    { label: "Age", field: "age", type:"text", disabled:true},
-                    { label: "Phone Number", field: "travelerPhoneNumber", type:"text", disabled:true, required:true },
+                    { label: "Age", field: "age", type:"text", disabled:false},
+                    { label: "Phone Number", field: "travelerPhoneNumber", type:"text", disabled:false, required:true },
                     { label: "Email", field: "email", type:"text", disabled:false, required:false },
                     { label: "Remarks", field: "travelerRemarks", type:"text", disabled:false, required:false },
                   ].map((item) => (
@@ -490,7 +491,7 @@ const TourDetailsPage = () => {
               <Button variant="contained" onClick={handleEdit} sx={{ mr: 1 }}>
                 Edit
               </Button>
-              <Button variant="contained" onClick={() => generatePDF(formData)}>Print</Button>
+              <Button variant="contained" onClick={() => generatePDF(formData, otherBills, travelers)}>Print</Button>
             </>
           ) : (
             <Button variant="contained" onClick={handleSubmit}>
