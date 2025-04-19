@@ -66,7 +66,7 @@ function App() {
       <Route path='/gallery' element={<Gallery/>} />
       <Route path='/readTestimonial' element={<TestimonialBlog/>} />
       <Route path='/itinerary' element={<Itinerary/>} />
-      <Route path='/newBooking' element={<BookingForm/>} />
+      <Route path='/newBooking' element={<EditBookingPage/>} />
       <Route path='/searchBooking' element={<SearchPage/>} />
       <Route path='/editBooking' element={<EditBookingPage/>} />
       <Route path='/upcomingToursBackend' element={<UpcomingToursBackend/>} />

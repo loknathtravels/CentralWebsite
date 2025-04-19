@@ -37,11 +37,11 @@ const summary = [
 //         console.log(labels[data], formData[data])
 //     }
 //   }
-  const getLabel = (input) => {
-     if (input.includes(labels.field)){
-        return labels.label, input.value
-     } 
-   }
+  // const getLabel = (input) => {
+  //    if (input.includes(labels.field)){
+  //       return labels.label, input.value
+  //    } 
+  //  }
 
   // Add Branding Text
   pdf.setFontSize(20);
