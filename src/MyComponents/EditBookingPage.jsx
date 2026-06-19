@@ -32,7 +32,7 @@ const TourDetailsPage = () => {
     address: "",
     phoneNumber: "",
     altPhoneNumber: "",
-    destination: "",
+    destination: "option1",
     dateOfJourney: "",
     tourCostAdult: "0",
     tourCostChildren: "0",
@@ -186,37 +186,39 @@ const TourDetailsPage = () => {
   return (
     <>
       <Navbar />
-      <Box sx={{ p: 2 }}>
-        <Card sx={{ml:"auto", mb:2}}>
-          <CardContent>
-            <Grid2 container spacing={5} >
-              {[
-                { label:"Booking ID", field:"bookingId", type:"text", disabled:true},
-                { label: "Booking Status", field: "bookingStatus", type:"text", disabled:true}
-                ].map((item) => (
-                  <Grid2 item xs={12} sm={6} key={item}>
-                 { item.type === "text" && (<TextField
-                    fullWidth
-                    label={item.label}
-                    sx={{ml:"225%"}}
-                    name={item.field}
-                    value={formData[item.field]}
+        {/* <Box sx={{ width: '100%', px: 1, boxSizing: 'border-box' }}> */}
+          <Card sx={{ mb: 2}}>
+            <CardContent style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+              {/* <Grid2 container spacing={1} justifyContent="center"> */}
+                <Grid2  xs={12} sm={5}>
+                  <TextField
+                    label="Booking ID"
+                    name="bookingId"
+                    value={formData.bookingId || ""}
                     onChange={handleChange}
-                    disabled={!isEditing || item.disabled}
-                    InputLabelProps={{
-                      shrink: true, // Prevents overlap
-                    }}
-                  />)}
+                    disabled={true}
+                  />
                 </Grid2>
-                ))}
-            </Grid2>
-          </CardContent>
-        </Card>
+
+                <Grid2  xs={12} sm={5}>
+                  <TextField
+                    label="Booking Status"
+                    name="bookingStatus"
+                    value={formData.bookingStatus || ""}
+                    onChange={handleChange}
+                    disabled={true}
+                  />
+                </Grid2>
+              {/* </Grid2> */}
+            </CardContent>
+          </Card>
+        {/* </Box> */}
+
         {/* Tour Details Section */}
         <Card sx={{ mb: 2 }}>
           <CardContent>
-            <Typography variant="h6">Tour Details</Typography>
-            <Grid2 container spacing={2}>
+            <Typography variant="h6" sx={{ mb: 2 }}>Tour Details</Typography>
+            <Grid2 container spacing={2} sx={{ mb: 2 }}>
               {[
                 { label: "Name", field: "name", type: "text", disabled:false, required:true },
                 { label: "Number Of Adults", field: "numberOfAdults", type:"text", disabled:false, required:true },
@@ -233,7 +235,7 @@ const TourDetailsPage = () => {
                 { label: "Internal Remarks", field: "internalRemarks", type:"text", disabled:false, required:false},
                 { label: "Traveler Notes", field: "travelerNotes", type:"text", disabled:false, required:false},
               ].map((item) => (
-                <Grid2 item xs={12} sm={6} key={item}>
+                <Grid2 item xs={12} sm={5} key={item.field}>
                  { item.type === "text" && (<TextField
                     fullWidth
                     label={item.label}
@@ -267,7 +269,8 @@ const TourDetailsPage = () => {
                       fullWidth
                       label={item.label}
                       name={item.field}
-                      required = {item.required}
+                      labelId="my-select-label"
+                      required={item.required}
                       value={formData[item.field]}
                       onChange={handleChange}
                       disabled={!isEditing}
@@ -313,7 +316,7 @@ const TourDetailsPage = () => {
         {/* Ticket Section */}
         <Card sx={{ mb: 2 }}>
           <CardContent>
-            <Typography variant="h6">Ticket Section</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>Ticket Section</Typography>
             {travelers.map((traveler, index) => (
               <Box key={index} sx={{ mb: 2, p: 2, border: "1px solid #ccc", borderRadius: 2 }}>
                 <Typography variant="subtitle1">Travelers {index + 1}</Typography>
@@ -382,10 +385,10 @@ const TourDetailsPage = () => {
           </CardContent>
         </Card>
 
-        <Button variant="contained" onClick={addTraveler}>
+        <Button variant="contained" onClick={addTraveler} sx={{ mr: 1, mt: 1, mb: 2 }}>
           Add Traveler
         </Button>
-        <Button variant="contained" onClick={deleteTraveler}>
+        <Button variant="contained" onClick={deleteTraveler} sx={{ mt: 1, mb: 2 }}>
           Delete Traveler
         </Button>
 
@@ -394,12 +397,12 @@ const TourDetailsPage = () => {
           <CardContent>
             <Typography variant="h6">Others Section</Typography>
             {otherBills.map((otherBill, index) =>(
-            <Grid2 container spacing={2}>
+            <Grid2 container spacing={2} key={index}>
               {[
                 { label: "Other Bills", field: "amount" },
                 { label: "Other Remarks", field: "reason" },
               ].map((item) => (
-                <Grid2 item xs={12} sm={6} key={`${index}`}>
+                <Grid2 item xs={12} sm={6} key={`${index}-${item.field}`}>
                   <TextField
                     fullWidth
                     label={item.label}
@@ -430,7 +433,7 @@ const TourDetailsPage = () => {
                 { label: "Advance to be paid", field: "advanceToBePaid", type:"text", disabled:true, required:true },
                 { label: "Total Bill Due", field: "totalBillDue", type:"text", disabled:true, required:true },
               ].map((item) => (
-                <Grid2 item xs={12} sm={6} key={item}>
+                <Grid2 item xs={12} sm={6} key={item.field}>
                   { item.type === "text" && (<TextField
                     fullWidth
                     label={item.label}
@@ -502,7 +505,6 @@ const TourDetailsPage = () => {
           {/* Snackbar for Alert Messages */}
 
         </Box>
-      </Box>
     </>
   );
 };
